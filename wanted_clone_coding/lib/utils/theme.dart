@@ -33,4 +33,33 @@ class MyTheme {
           thickness: MaterialStateProperty.all(5),
           thumbColor: MaterialStateProperty.all(AppColors.maingray),
           radius: const Radius.circular(10)));
+  static final darkTheme = ThemeData(
+      fontFamily: 'SUIT',
+      appBarTheme: const AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: AppColors.mainblack,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+        ),
+
+        backgroundColor: AppColors.mainblack,
+        // foregroundColor: mainblack,
+      ),
+      canvasColor: AppColors.mainblack,
+      textTheme: MyTextTheme.textTheme.apply(bodyColor: AppColors.mainWhite),
+      textSelectionTheme:
+          const TextSelectionThemeData(cursorColor: AppColors.mainblue),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          primary: AppColors.mainWhite,
+          splashFactory: NoSplash.splashFactory,
+        ),
+      ),
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      scrollbarTheme: ScrollbarThemeData(
+          thickness: MaterialStateProperty.all(5),
+          thumbColor: MaterialStateProperty.all(AppColors.maingray),
+          radius: const Radius.circular(10)));
 }
