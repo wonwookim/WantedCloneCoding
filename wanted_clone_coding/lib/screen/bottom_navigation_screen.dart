@@ -6,6 +6,8 @@ import 'package:wanted_clone_coding/screen/employment/employment_screen.dart';
 import 'package:wanted_clone_coding/screen/home/home_screen.dart';
 import 'package:wanted_clone_coding/screen/my_info/my_info_screen.dart';
 import 'package:wanted_clone_coding/screen/my_wanted/my_wanted_screen.dart';
+import 'package:wanted_clone_coding/utils/color.dart';
+import 'package:wanted_clone_coding/utils/font.dart';
 
 class BottomNavigationScreen extends StatelessWidget {
   BottomNavigationScreen({Key? key}) : super(key: key);
@@ -28,19 +30,34 @@ class BottomNavigationScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: controller.currentIndex.value,
-            onTap: controller.changeBottomNav,
-            items: const [
-              BottomNavigationBarItem(icon: Text('홈'), label: '홈'),
-              BottomNavigationBarItem(icon: Text('채용'), label: '채용'),
-              BottomNavigationBarItem(icon: Text('커뮤니티'), label: '커뮤니티'),
-              BottomNavigationBarItem(icon: Text('내 정보'), label: '내 정보'),
-              BottomNavigationBarItem(icon: Text('MY 원티드'), label: 'MY 원티드')
-            ]),
+        () => Container(
+          height: 56,
+          child: BottomNavigationBar(
+            backgroundColor: AppColors.popupGray,
+            elevation: 0,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              type: BottomNavigationBarType.fixed,
+              currentIndex: controller.currentIndex.value,
+              onTap: controller.changeBottomNav,
+              items: [
+                BottomNavigationBarItem(
+                    icon: Text('홈'),
+                    label: '홈'),
+                BottomNavigationBarItem(
+                    icon: Text('채용'),
+                    label: '채용'),
+                BottomNavigationBarItem(
+                    icon: Text('커뮤니티'),
+                    label: '커뮤니티'),
+                BottomNavigationBarItem(
+                    icon: Text('내 정보'),
+                    label: '내 정보'),
+                BottomNavigationBarItem(
+                    icon: Text('MY 원티드'),
+                    label: 'MY 원티드')
+              ]),
+        ),
       ),
     );
   }

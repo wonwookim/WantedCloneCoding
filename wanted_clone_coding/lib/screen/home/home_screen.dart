@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wanted_clone_coding/utils/color.dart';
 import 'package:wanted_clone_coding/utils/font.dart';
+import 'package:wanted_clone_coding/widget/appbar_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -7,8 +9,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home', style: MyTextTheme.size_22(context),),elevation: 0,),
-      body: Container(),
+      body: Stack(
+        children: [
+          AppbarWidget(),
+          Divider(height: 1,color: AppColors.maingray,)
+        ],
+      ),
     );
   }
 }

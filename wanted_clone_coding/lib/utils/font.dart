@@ -5,17 +5,15 @@ class MyTextTheme {
   static TextTheme textTheme = const TextTheme(
     displayLarge: TextStyle(
       //Size22
-      fontSize:22,
+      fontSize: 22,
       fontWeight: FontWeight.w700,
       fontFamily: 'SUIT',
-      color: AppColors.mainblack
     ),
     displayMedium: TextStyle(
       //Size18
-      fontSize:18,
+      fontSize: 18,
       fontWeight: FontWeight.w700,
       fontFamily: 'SUIT',
-      color: AppColors.mainblack
     ),
     titleLarge: TextStyle(
       // title
@@ -70,9 +68,11 @@ class MyTextTheme {
   static TextStyle size_22(BuildContext context) {
     return Theme.of(context).textTheme.displayLarge!;
   }
+
   static TextStyle size_18(BuildContext context) {
     return Theme.of(context).textTheme.displayMedium!;
   }
+
   static TextStyle title(BuildContext context) {
     return Theme.of(context).textTheme.titleLarge!;
   }
