@@ -8,7 +8,7 @@ class MyTheme {
       fontFamily: 'SUIT',
       appBarTheme: const AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: AppColors.mainWhite,
+          // statusBarColor: AppColors.mainWhite,
           statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.dark,
         ),
@@ -37,7 +37,7 @@ class MyTheme {
       fontFamily: 'SUIT',
       appBarTheme: const AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: AppColors.mainblack,
+          // statusBarColor: AppColors.mainblack,
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.light,
         ),

@@ -10,7 +10,7 @@ class AppbarWidget extends StatelessWidget  {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return Padding(
       padding: EdgeInsets.only(top: statusBarHeight, left: 16,right: 16),
-      child: Container(
+      child: SizedBox(
         height: kToolbarHeight,
         child: Row(children: [
           Image.asset('assets/icons/wanted_logo.png',height: 32, width: 90),
