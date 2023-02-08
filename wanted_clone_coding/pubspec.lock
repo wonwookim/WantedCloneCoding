@@ -137,17 +137,21 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
   flutter_web_plugins:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
+=======
+>>>>>>> 2f769e3 (<FIX> profile_screen image cpertinoActionSheet add)
   get:
     dependency: "direct main"
     description:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "5.0.0-beta.52"
   http:
     dependency: transitive
@@ -170,6 +174,9 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+=======
+    version: "4.6.5"
+>>>>>>> 2f769e3 (<FIX> profile_screen image cpertinoActionSheet add)
   lints:
     dependency: transitive
     description:
