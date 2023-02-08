@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wanted_clone_coding/controller/home_controller.dart';
 import 'package:wanted_clone_coding/utils/color.dart';
 import 'package:wanted_clone_coding/utils/font.dart';
 import 'package:wanted_clone_coding/widget/appbar_widget.dart';
 import 'package:wanted_clone_coding/widget/auto_change_widget.dart';
+import 'package:wanted_clone_coding/widget/dialog_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -31,6 +33,7 @@ class HomeScreen extends StatelessWidget {
                     ))
               ],
             ),
+            myCareerInsight(context)
           ],
         ),
       ),
@@ -57,11 +60,32 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      SizedBox(height: 100),
+      SizedBox(height: 70),
     ]);
   }
 
   Widget fixed_color_area() {
     return Container();
+  }
+
+  Widget myCareerInsight(context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text('나에게 필요한 커리어 인사이트',
+                  style: MyTextTheme.size_18(context)
+                      .copyWith(color: AppColors.mainblack)),
+              const SizedBox(width: 4),
+              GestureDetector(
+                  onTap: () {showOneButtonDialog(title: '취직/이직 준비하시기도 바쁘시죠?', buttonFunction: () {}, buttonText: '확인', startContent: '커리어 인사이트, 이제 따로 찾지 말고');},
+                  child: SvgPicture.asset('assets/icons/information.svg'))
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
