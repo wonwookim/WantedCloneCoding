@@ -13,7 +13,10 @@ class HomeController extends GetxController {
   Timer? timer;
   RxList<PaletteColor> colors = <PaletteColor>[].obs;
   RxInt currentIndex = 0.obs;
+  //-----------tag-----------------------
   RxList<Tag> tagList = <Tag>[].obs;
+  RxInt activeTag = 0.obs;
+  //-----------------------------------
   @override
   void onInit() async {
     pController = PageController(
@@ -66,6 +69,8 @@ class HomeController extends GetxController {
 
   void getTag() {
     tagList.value = tag_json.map((e) => Tag.fromJson(e)).toList();
+    tagList.first.isTap.value = 1;
+    activeTag.value = tagList.first.tagId;
   }
 
 // ------------------------------------DUMMY DATA --------------------------------------------------------------------
@@ -91,6 +96,10 @@ class HomeController extends GetxController {
     {'tag_id': 0, 'tag': 'IT/기술'},
     {'tag_id': 1, 'tag': '개발'},
     {'tag_id': 2, 'tag': '커리어고민'},
-    {'tag_id': 3, 'tag': '취업/이직'}
+    {'tag_id': 3, 'tag': '취업/이직'},
+    {'tag_id': 4, 'tag': '데이터'},
+    {'tag_id': 5, 'tag': '회사생활'},
+    {'tag_id': 6, 'tag': 'HR'},
+    {'tag_id': 7, 'tag': '마케팅'}
   ];
 }
