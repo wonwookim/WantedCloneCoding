@@ -19,6 +19,7 @@ class HomeController extends GetxController {
   //-----------tag-----------------------
   RxList<Tag> tagList = <Tag>[].obs;
   RxInt activeTag = 0.obs;
+  RxBool isTap = false.obs;
   //-----------------------------------
   RxMap<int, List<CareerInsight>> careerInsightField =
       <int, List<CareerInsight>>{}.obs;

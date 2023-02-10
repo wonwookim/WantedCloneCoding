@@ -21,12 +21,14 @@ class TagWidget extends StatelessWidget {
             border: Border.all(color: tag.isTap.value == 0 ?AppColors.dividegray : AppColors.mainblue)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Center(
-            child: Text(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Text(
               tag.tag,
               style: MyTextTheme.size_12_bold(context)
                   .copyWith(color: tag.isTap.value == 0 ?AppColors.maingray : AppColors.mainblue),
-            ),
+            )]
           ),
         ),
       ),

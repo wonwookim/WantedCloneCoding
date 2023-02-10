@@ -103,49 +103,79 @@ class HomeScreen extends StatelessWidget {
         Obx(
           () => Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 40.0),
-                child: SizedBox(
-                  height: 35,
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                          onTap: () async{
-                            controller.tagList
-                                .where((p0) =>
-                                    p0.tagId == controller.activeTag.value)
-                                .first
-                                .isTap
-                                .value = 0;
-                            controller.tagList[index].isTap.value = 1;
-                            await controller.getCareerInsight(controller.tagList[index].tagId);
-                            controller.activeTag.value =
-                                controller.tagList[index].tagId;
+              controller.isTap.value
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 40),
+                      child: Wrap(
+                          clipBehavior: Clip.hardEdge,
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: controller.tagList
+                              .map((element) => TagWidget(
+                                    tag: element,
+                                    height: 35,
+                                  ))
+                              .toList()),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 40.0),
+                      child: SizedBox(
+                        height: 35,
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                                onTap: () async {
+                                  controller.tagList
+                                      .where((p0) =>
+                                          p0.tagId ==
+                                          controller.activeTag.value)
+                                      .first
+                                      .isTap
+                                      .value = 0;
+                                  controller.tagList[index].isTap.value = 1;
+                                  await controller.getCareerInsight(
+                                      controller.tagList[index].tagId);
+                                  controller.activeTag.value =
+                                      controller.tagList[index].tagId;
+                                },
+                                child:
+                                    TagWidget(tag: controller.tagList[index]));
                           },
-                          child: TagWidget(tag: controller.tagList[index]));
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        width: 8,
-                      );
-                    },
-                    padding: EdgeInsets.zero,
-                    itemCount: controller.tagList.length,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    primary: false,
-                  ),
-                ),
-              ),
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              width: 8,
+                            );
+                          },
+                          padding: const EdgeInsets.only(left: 16, right: 20),
+                          itemCount: controller.tagList.length,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          primary: false,
+                        ),
+                      ),
+                    ),
               Positioned(
                 right: 16,
-                child: Container(
-                  width: 35,
-                  height: 35,
-                  decoration: BoxDecoration(
-                      color: AppColors.mainWhite,
-                      border: Border.all(color: AppColors.dividegray),
-                      borderRadius: BorderRadius.circular(16)),
+                child: GestureDetector(
+                  onTap: () {
+                    controller.isTap.value = !controller.isTap.value;
+                  },
+                  child: Container(
+                    width: 35,
+                    height: 35,
+                    decoration: BoxDecoration(
+                        color: AppColors.mainWhite,
+                        border: Border.all(color: AppColors.dividegray),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: controller.isTap.value ? null :[
+                          BoxShadow(
+                              color: AppColors.mainWhite.withOpacity(0.7),
+                              spreadRadius: 10,
+                              blurRadius: 5.0,
+                              offset: Offset(-3, 0))
+                        ]),
+                  ),
                 ),
               )
             ],
@@ -165,7 +195,7 @@ class HomeScreen extends StatelessWidget {
                   mainAxisSpacing: 32,
                   crossAxisSpacing: 16),
               itemBuilder: (context, index) {
-                return Obx(()=> careerInsightInfo(context, index));
+                return Obx(() => careerInsightInfo(context, index));
               }),
         )
       ],
