@@ -17,6 +17,6 @@ class CareerInsight {
       title: json['title'],
       body: json['body'],
       name: json['name'],
-      mainImg: json['main_img'],
-      profileImg: json['profile_img']);
+      mainImg: json['main_img'] ?? '',
+      profileImg: json['profile_img'] ?? '');
 }
