@@ -1,0 +1,1 @@
+enum ScreenState { normal, loading, disconnect, error, success }

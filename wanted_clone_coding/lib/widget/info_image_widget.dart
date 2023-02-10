@@ -17,7 +17,7 @@ class InfoImageWidget extends StatelessWidget {
                       clipBehavior: Clip.hardEdge,
                       decoration:
                           BoxDecoration(border: Border.all(color: AppColors.dividegray),borderRadius: BorderRadius.circular(8)),
-                      child: CachedNetworkImage(
+                      child: imgUrl == '' ? Image.asset('assets/icons/default_image.png', fit: BoxFit.fill,) : CachedNetworkImage(
                           fit: BoxFit.fill,
                           imageUrl:
                               imgUrl),

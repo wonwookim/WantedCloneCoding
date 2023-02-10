@@ -1,13 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wanted_clone_coding/controller/home_controller.dart';
+import 'package:wanted_clone_coding/model/career_insight_model.dart';
 import 'package:wanted_clone_coding/utils/color.dart';
+import 'package:wanted_clone_coding/utils/constant.dart';
 import 'package:wanted_clone_coding/utils/font.dart';
 import 'package:wanted_clone_coding/widget/appbar_widget.dart';
 import 'package:wanted_clone_coding/widget/auto_change_widget.dart';
 import 'package:wanted_clone_coding/widget/dialog_widget.dart';
+import 'package:wanted_clone_coding/widget/info_image_widget.dart';
 import 'package:wanted_clone_coding/widget/tag_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,26 +20,27 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
-      child: Scaffold(
+    return Obx(
+      () => Scaffold(
         body: SingleChildScrollView(
           child: Column(
             children: [
               Stack(
                 children: [
                   change_color_area(),
-                  Positioned(
-                      top: statusBarHeight + kToolbarHeight + 20,
-                      child: AutoChangeWidget(
-                        categoryText: 'EVENT',
-                        controller: controller.pController,
-                        eventList: controller.eventList,
-                        currentIndex: controller.currentIndex,
-                      ))
+                  if (controller.screenState.value == ScreenState.success)
+                    Positioned(
+                        top: statusBarHeight + kToolbarHeight + 20,
+                        child: AutoChangeWidget(
+                          categoryText: 'EVENT',
+                          controller: controller.pController,
+                          eventList: controller.eventList,
+                          currentIndex: controller.currentIndex,
+                        ))
                 ],
               ),
-              myCareerInsight(context)
+              if (controller.screenState.value == ScreenState.success)
+                myCareerInsight(context)
             ],
           ),
         ),
@@ -98,48 +103,79 @@ class HomeScreen extends StatelessWidget {
         Obx(
           () => Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 40.0),
-                child: SizedBox(
-                  height: 35,
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                          onTap: () {
-                            controller.tagList
-                                .where((p0) =>
-                                    p0.tagId == controller.activeTag.value)
-                                .first
-                                .isTap
-                                .value = 0;
-                            controller.tagList[index].isTap.value = 1;
-                            controller.activeTag.value =
-                                controller.tagList[index].tagId;
+              controller.isTap.value
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 40),
+                      child: Wrap(
+                          clipBehavior: Clip.hardEdge,
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: controller.tagList
+                              .map((element) => TagWidget(
+                                    tag: element,
+                                    height: 35,
+                                  ))
+                              .toList()),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 40.0),
+                      child: SizedBox(
+                        height: 35,
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                                onTap: () async {
+                                  controller.tagList
+                                      .where((p0) =>
+                                          p0.tagId ==
+                                          controller.activeTag.value)
+                                      .first
+                                      .isTap
+                                      .value = 0;
+                                  controller.tagList[index].isTap.value = 1;
+                                  await controller.getCareerInsight(
+                                      controller.tagList[index].tagId);
+                                  controller.activeTag.value =
+                                      controller.tagList[index].tagId;
+                                },
+                                child:
+                                    TagWidget(tag: controller.tagList[index]));
                           },
-                          child: TagWidget(tag: controller.tagList[index]));
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        width: 8,
-                      );
-                    },
-                    padding: EdgeInsets.zero,
-                    itemCount: controller.tagList.length,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    primary: false,
-                  ),
-                ),
-              ),
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              width: 8,
+                            );
+                          },
+                          padding: const EdgeInsets.only(left: 16, right: 20),
+                          itemCount: controller.tagList.length,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          primary: false,
+                        ),
+                      ),
+                    ),
               Positioned(
                 right: 16,
-                child: Container(
-                  width: 35,
-                  height: 35,
-                  decoration: BoxDecoration(
-                      color: AppColors.mainWhite,
-                      border: Border.all(color: AppColors.dividegray),
-                      borderRadius: BorderRadius.circular(16)),
+                child: GestureDetector(
+                  onTap: () {
+                    controller.isTap.value = !controller.isTap.value;
+                  },
+                  child: Container(
+                    width: 35,
+                    height: 35,
+                    decoration: BoxDecoration(
+                        color: AppColors.mainWhite,
+                        border: Border.all(color: AppColors.dividegray),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: controller.isTap.value ? null :[
+                          BoxShadow(
+                              color: AppColors.mainWhite.withOpacity(0.7),
+                              spreadRadius: 10,
+                              blurRadius: 5.0,
+                              offset: Offset(-3, 0))
+                        ]),
+                  ),
                 ),
               )
             ],
@@ -149,19 +185,62 @@ class HomeScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: GridView.builder(
-            padding: EdgeInsets.zero,
-            primary: false,
-            shrinkWrap: true,
-            itemCount: 6,
+              padding: EdgeInsets.zero,
+              primary: false,
+              shrinkWrap: true,
+              itemCount: 6,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 1 / 1,
+                  childAspectRatio: 0.75,
                   mainAxisSpacing: 32,
                   crossAxisSpacing: 16),
               itemBuilder: (context, index) {
-                return Container(
-                    decoration: BoxDecoration(color: AppColors.mainblack));
+                return Obx(() => careerInsightInfo(context, index));
               }),
+        )
+      ],
+    );
+  }
+
+  Widget careerInsightInfo(context, int index) {
+    CareerInsight careerInsight =
+        controller.careerInsightField[controller.activeTag.value]![index];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        InfoImageWidget(
+            height: 110, width: Get.width, imgUrl: careerInsight.mainImg),
+        const SizedBox(height: 16),
+        Text(
+          careerInsight.title,
+          style: MyTextTheme.mainbold(context),
+          maxLines: 2,
+        ),
+        const SizedBox(height: 4),
+        Text(careerInsight.body,
+            maxLines: 2,
+            style: MyTextTheme.caption(context)
+                .copyWith(color: AppColors.maingray)),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Container(
+              height: 24,
+              width: 24,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.cardGray),
+                  borderRadius: BorderRadius.circular(16)),
+              child: careerInsight.profileImg != ''
+                  ? CachedNetworkImage(imageUrl: careerInsight.profileImg)
+                  : Image.asset('assets/icons/default_profile.png'),
+            ),
+            const SizedBox(width: 4),
+            Text(careerInsight.name,
+                style: MyTextTheme.caption(context).copyWith(
+                  color: AppColors.maingray,
+                ))
+          ],
         )
       ],
     );
