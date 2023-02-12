@@ -72,6 +72,6 @@ void showOneButtonDialog({
       ),
     ),
     barrierDismissible: false,
-    barrierColor: AppColors.popupGray,
+    barrierColor: Colors.transparent.withOpacity(0.5),
   );
 }
