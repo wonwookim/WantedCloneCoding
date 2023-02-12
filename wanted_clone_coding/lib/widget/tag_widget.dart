@@ -21,7 +21,7 @@ class TagWidget extends StatelessWidget {
           height: height,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: tag.isTap.value == 0 ?AppColors.dividegray : AppColors.mainblue)),
+              border: Border.all(color: tag.isTap.value == 0 ?AppColors.cardGray : AppColors.mainblue)),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
@@ -30,7 +30,7 @@ class TagWidget extends StatelessWidget {
               children: [Text(
                 tag.tag,
                 style: MyTextTheme.size_12_bold(context)
-                    .copyWith(color: tag.isTap.value == 0 ?AppColors.maingray : AppColors.mainblue),
+                    .copyWith(color: tag.isTap.value == 0 ?AppColors.textGray : AppColors.mainblue),
               )]
             ),
           ),

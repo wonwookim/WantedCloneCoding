@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_widget_cache.dart';
 import 'package:wanted_clone_coding/utils/color.dart';
@@ -9,14 +10,24 @@ class InfoImageWidget extends StatelessWidget {
       {Key? key,
       required this.height,
       required this.width,
-      required this.imgUrl})
+      required this.imgUrl,
+      this.isborder = true,
+      this.child,
+      this.istemp = false})
       : super(key: key);
   double height;
   double width;
   String imgUrl;
+  Widget? child;
+  bool isborder;
+  bool istemp;
   @override
   Widget build(BuildContext context) {
-    return imgUrl == ""
+    return 
+    istemp ? imageWidget(Image.asset(
+            imgUrl,
+          ).image) :
+    imgUrl == ""
         ? imageWidget(Image.asset(
             'assets/icons/default_image.png',
           ).image)
@@ -34,8 +45,9 @@ class InfoImageWidget extends StatelessWidget {
         width: width,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-            border: Border.all(color: AppColors.dividegray),
+            border: isborder ? Border.all(color: AppColors.dividegray) : null,
             borderRadius: BorderRadius.circular(8),
-            image: DecorationImage(image: image, fit: BoxFit.fill)));
+            image: DecorationImage(image: image, fit: BoxFit.fill)),
+        child: child,);
   }
 }
