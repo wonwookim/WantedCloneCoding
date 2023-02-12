@@ -33,7 +33,11 @@ class HomeController extends GetxController {
 
   //----------key--------------------------
   GlobalKey gKey = GlobalKey();
-
+  @override
+  void refresh() {
+    super.refresh();
+    appbarActive(false);
+  }
   @override
   void onInit() async {
  
@@ -42,6 +46,7 @@ class HomeController extends GetxController {
         appbarActive(true);
       }else{
         appbarActive(false);
+        appBarTagIsTap(false);
       }
     });
   

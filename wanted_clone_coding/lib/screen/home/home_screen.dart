@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
                 titleSpacing: 0,
                 elevation: 0,
                 automaticallyImplyLeading: false,
-                bottom: PreferredSize(preferredSize: Size.fromHeight(1), child: Divider(height: 1, color: AppColors.cardGray,),),
+                bottom: const PreferredSize(preferredSize: Size.fromHeight(1), child: Divider(height: 1, color: AppColors.cardGray,),),
               )
             : null,
         body: SingleChildScrollView(
@@ -111,9 +111,9 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 16),
-        tapWidget(controller.isTap),
         SizedBox(height: 16, key: controller.gKey),
+        tapWidget(controller.isTap),
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: GridView.builder(
@@ -129,7 +129,13 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Obx(() => careerInsightInfo(context, index));
               }),
-        )
+        ),
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: temptButton(context),
+        ),
+        const SizedBox(height: 24,)
       ],
     );
   }
@@ -273,6 +279,23 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  Widget temptButton(context){
+    return Container(
+      decoration: BoxDecoration(border: Border.all(color: AppColors.dividegray), borderRadius: BorderRadius.circular(32),),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('더 많은 콘텐츠 보기 ', style: MyTextTheme.navigationTitle(context).copyWith(fontSize: 16)
+                        .copyWith(color: AppColors.mainblack),),
+            Icon(Icons.refresh)
+          ],
+        ),
+      )
     );
   }
 }
