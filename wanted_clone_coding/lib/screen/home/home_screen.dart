@@ -17,12 +17,24 @@ import 'package:wanted_clone_coding/widget/tag_widget.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
   HomeController controller = Get.put(HomeController());
+  GlobalKey key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
     return Obx(
       () => Scaffold(
+        appBar: controller.appbarActive.value
+            ? AppBar(
+              toolbarHeight: controller.appBarTagIsTap.value ? 110 : kToolbarHeight,
+                title: tapWidget(controller.appBarTagIsTap),
+                titleSpacing: 0,
+                elevation: 0,
+                automaticallyImplyLeading: false,
+                bottom: PreferredSize(preferredSize: Size.fromHeight(1), child: Divider(height: 1, color: AppColors.cardGray,),),
+              )
+            : null,
         body: SingleChildScrollView(
+          controller: controller.sController,
           child: Column(
             children: [
               Stack(
@@ -36,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                           controller: controller.pController,
                           eventList: controller.eventList,
                           currentIndex: controller.currentIndex,
-                        ))
+                        )),
                 ],
               ),
               if (controller.screenState.value == ScreenState.success)
@@ -100,88 +112,8 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Obx(
-          () => Stack(
-            children: [
-              controller.isTap.value
-                  ? Padding(
-                      padding: const EdgeInsets.only(left: 16, right: 40),
-                      child: Wrap(
-                          clipBehavior: Clip.hardEdge,
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: controller.tagList
-                              .map((element) => TagWidget(
-                                    tag: element,
-                                    height: 35,
-                                  ))
-                              .toList()),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.only(right: 40.0),
-                      child: SizedBox(
-                        height: 35,
-                        child: ListView.separated(
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                                onTap: () async {
-                                  controller.tagList
-                                      .where((p0) =>
-                                          p0.tagId ==
-                                          controller.activeTag.value)
-                                      .first
-                                      .isTap
-                                      .value = 0;
-                                  controller.tagList[index].isTap.value = 1;
-                                  await controller.getCareerInsight(
-                                      controller.tagList[index].tagId);
-                                  controller.activeTag.value =
-                                      controller.tagList[index].tagId;
-                                },
-                                child:
-                                    TagWidget(tag: controller.tagList[index]));
-                          },
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(
-                              width: 8,
-                            );
-                          },
-                          padding: const EdgeInsets.only(left: 16, right: 20),
-                          itemCount: controller.tagList.length,
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          primary: false,
-                        ),
-                      ),
-                    ),
-              Positioned(
-                right: 16,
-                child: GestureDetector(
-                  onTap: () {
-                    controller.isTap.value = !controller.isTap.value;
-                  },
-                  child: Container(
-                    width: 35,
-                    height: 35,
-                    decoration: BoxDecoration(
-                        color: AppColors.mainWhite,
-                        border: Border.all(color: AppColors.dividegray),
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: controller.isTap.value ? null :[
-                          BoxShadow(
-                              color: AppColors.mainWhite.withOpacity(0.7),
-                              spreadRadius: 10,
-                              blurRadius: 5.0,
-                              offset: Offset(-3, 0))
-                        ]),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
+        tapWidget(controller.isTap),
+        SizedBox(height: 16, key: controller.gKey),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: GridView.builder(
@@ -243,6 +175,104 @@ class HomeScreen extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+
+  Widget tapWidget(RxBool isTap) {
+    return Obx(
+      () => Stack(
+        children: [
+          isTap.value
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 60),
+                  child: Wrap(
+                      clipBehavior: Clip.hardEdge,
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: controller.tagList
+                          .map((element) => TagWidget(
+                                ontap: () async {
+                                  element.isTap.value = 1;
+                                  controller.tagList
+                                      .where((tag) =>
+                                          tag.tagId ==
+                                          controller.activeTag.value)
+                                      .first
+                                      .isTap
+                                      .value = 0;
+                                  await controller
+                                      .getCareerInsight(element.tagId);
+                                  controller.activeTag.value = element.tagId;
+                                },
+                                tag: element,
+                                height: 35,
+                              ))
+                          .toList()),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(right: 40.0),
+                  child: SizedBox(
+                    height: 35,
+                    child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return TagWidget(
+                          tag: controller.tagList[index],
+                          ontap: () async {
+                            controller.tagList
+                                .where((p0) =>
+                                    p0.tagId == controller.activeTag.value)
+                                .first
+                                .isTap
+                                .value = 0;
+                            controller.tagList[index].isTap.value = 1;
+                            await controller.getCareerInsight(
+                                controller.tagList[index].tagId);
+                            controller.activeTag.value =
+                                controller.tagList[index].tagId;
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          width: 8,
+                        );
+                      },
+                      padding: const EdgeInsets.only(left: 16, right: 20),
+                      itemCount: controller.tagList.length,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      primary: false,
+                    ),
+                  ),
+                ),
+          Positioned(
+            right: 16,
+            child: GestureDetector(
+              onTap: () {
+                isTap.value = !isTap.value;
+              },
+              child: Container(
+                width: 35,
+                height: 35,
+                decoration: BoxDecoration(
+                    color: AppColors.mainWhite,
+                    border: Border.all(color: AppColors.dividegray),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: controller.isTap.value
+                        ? null
+                        : [
+                            BoxShadow(
+                                color: AppColors.mainWhite.withOpacity(0.7),
+                                spreadRadius: 10,
+                                blurRadius: 5.0,
+                                offset: Offset(-3, 0))
+                          ]),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

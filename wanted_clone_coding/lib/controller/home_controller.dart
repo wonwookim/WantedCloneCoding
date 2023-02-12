@@ -12,20 +12,39 @@ import '../model/event_model.dart';
 
 class HomeController extends GetxController {
   late PageController pController;
+  ScrollController sController = ScrollController();
   Timer? timer;
   Rx<ScreenState> screenState = ScreenState.normal.obs;
   RxList<PaletteColor> colors = <PaletteColor>[].obs;
   RxInt currentIndex = 0.obs;
+  RxDouble tag_y = 0.0.obs;
+
+  //----------Appbar Active-------------
+  RxBool appbarActive = false.obs;
+
   //-----------tag-----------------------
   RxList<Tag> tagList = <Tag>[].obs;
   RxInt activeTag = 0.obs;
-  RxBool isTap = false.obs;
+  RxBool isTap = false.obs; //Appbar가 아닌 일반 tag
+  RxBool appBarTagIsTap = false.obs;
   //-----------------------------------
   RxMap<int, List<CareerInsight>> careerInsightField =
       <int, List<CareerInsight>>{}.obs;
 
+  //----------key--------------------------
+  GlobalKey gKey = GlobalKey();
+
   @override
   void onInit() async {
+ 
+    sController.addListener(() {  //Appbar 존재 유무 
+      if(sController.offset >= tag_y.value) {
+        appbarActive(true);
+      }else{
+        appbarActive(false);
+      }
+    });
+  
     pController = PageController(
         viewportFraction: 0.9, initialPage: eventList.length * 100);
     await getTag().then((value) => getCareerInsight(activeTag.value));
@@ -40,8 +59,12 @@ class HomeController extends GetxController {
       }
     });
     super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      tag_y.value = getPosition().dy;
+    });
   }
 
+  //------------팔레트 색 구하기 ------------------
   Future getPalettes() async {
     List<String> images = eventList.map((e) => e.image).toList();
     await _updatePalettes(images);
@@ -87,6 +110,14 @@ class HomeController extends GetxController {
           .map((careerInsight) => CareerInsight.fromJson(careerInsight))
           .toList();
     }
+  }
+
+//-----------------------------------------------get Tag Position------------------------------------------------------------------
+  Offset getPosition() {
+    final RenderBox renderBox =
+        gKey.currentContext!.findRenderObject() as RenderBox;
+    Offset offset = renderBox.localToGlobal(Offset.zero);
+    return offset;
   }
 
 // ------------------------------------DUMMY DATA --------------------------------------------------------------------
