@@ -57,7 +57,6 @@ class HomeScreen extends StatelessWidget {
                       Positioned(
                           top: statusBarHeight + kToolbarHeight + 20,
                           child: AutoChangeWidget(
-                            categoryText: 'EVENT',
                             controller: controller.pController,
                             eventList: controller.eventList,
                             currentIndex: controller.currentIndex,

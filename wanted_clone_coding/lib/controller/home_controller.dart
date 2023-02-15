@@ -146,6 +146,7 @@ class HomeController extends GetxController {
 // ------------------------------------DUMMY DATA --------------------------------------------------------------------
   List<Map<String, dynamic>> event_json = [
     {
+      'type' : 'event',
       'title': '우리 회사를 소개합니다.',
       'subtitle': '회사에 대한 정보, 원티드가 찾아드릴게요',
       'start_date': null,
@@ -155,6 +156,7 @@ class HomeController extends GetxController {
           'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbRQgj4%2Fbtq3n9auUMk%2Fx1jFjVPF3vwrv7dWJZmLok%2Fimg.png',
     },
     {
+      'type' : 'event',
       'title': '2022 개발자 리포트',
       'subtitle': '지금 무료로 다운받으세요!',
       'start_date': null,
@@ -163,6 +165,7 @@ class HomeController extends GetxController {
       'image': 'https://static.wanted.co.kr/images/events/2680/11ae45d0.jpg'
     },
     {
+      'type' : 'event',
       'title': '원티드 매거진 & Workers',
       'subtitle': '무료 다운로드하고 경품도 받으세요!',
       'start_date': null,
