@@ -85,7 +85,7 @@ class EmploymentController extends GetxController {
       'end_date': null,
       'tag': null,
       'image':
-          'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbRQgj4%2Fbtq3n9auUMk%2Fx1jFjVPF3vwrv7dWJZmLok%2Fimg.png',
+          'https://cdn.imweb.me/thumbnail/20220604/63df980e50c50.png',
     },
     {
       'type': 'event',
@@ -94,7 +94,7 @@ class EmploymentController extends GetxController {
       'start_date': null,
       'end_date': null,
       'tag': null,
-      'image': 'https://static.wanted.co.kr/images/events/2680/11ae45d0.jpg'
+      'image': 'https://contents.nextunicorn.kr/company/179b45c219945a65/rep-76e017d744e6279i5fc77199f3f55994cffa.png?s=640x&t=cover&f=jpg'
     },
     {
       'type': 'recruit',
@@ -103,7 +103,7 @@ class EmploymentController extends GetxController {
       'start_date': null,
       'end_date': null,
       'tag': null,
-      'image': 'https://static.wanted.co.kr/images/events/1797/dac1b4f4.jpg'
+      'image': 'https://cdn.imweb.me/upload/S202201267a1bf4b51a6a5/8b289e6b017e4.png'
     },
   ];
 }
