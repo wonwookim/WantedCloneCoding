@@ -47,6 +47,12 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
+    await getTag().then((value) => getCareerInsight(activeTag.value));
+    await getEventForCareerDevelopList();
+    await getEventList();
+    await getPalettes();
+    screenState(ScreenState.success);
+    timerstart();
     pController = PageController(
         viewportFraction: 0.9, initialPage: eventList.length * 100);
     sController.addListener(() {
@@ -69,6 +75,8 @@ class HomeController extends GetxController {
       tag_y.value = getPosition().dy;
     });
   }
+
+  //------------팔레트 색 구하기 ------------------
   Future getPalettes() async {
     List<String> images = eventList.map((e) => e.image).toList();
     await _updatePalettes(images);
