@@ -58,11 +58,21 @@ class MyTextTheme {
       fontFamily: 'SUIT',
     ),
     labelSmall: TextStyle(
-      // tempfont
-      fontSize: 11,
-      fontWeight: FontWeight.w400,
+      // button
+      fontSize: 13,
+      fontWeight: FontWeight.w700,
       fontFamily: 'SUIT',
     ),
+    headlineLarge: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w700,
+      fontFamily: 'SUIT'
+    ),
+    headlineMedium: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'SUIT'
+    )
   );
 
   static TextStyle size_22(BuildContext context) {
@@ -101,7 +111,13 @@ class MyTextTheme {
     return Theme.of(context).textTheme.bodySmall!;
   }
 
-  static TextStyle tempfont(BuildContext context) {
+  static TextStyle buttonfont(BuildContext context) {
     return Theme.of(context).textTheme.labelSmall!;
+  }
+  static TextStyle size_12_bold(BuildContext context) {
+    return Theme.of(context).textTheme.headlineLarge!;
+  }
+  static TextStyle size_12(BuildContext context) {
+    return Theme.of(context).textTheme.headlineMedium!;
   }
 }

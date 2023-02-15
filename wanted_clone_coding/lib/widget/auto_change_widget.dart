@@ -32,7 +32,7 @@ class AutoChangeWidget extends StatelessWidget {
             padding: EdgeInsets.only(left: 16.0),
             child: Text(
               eventList[currentIndex.value].title,
-              style: MyTextTheme.size_18(context)
+              style: MyTextTheme.size_22(context)
                   .copyWith(color: AppColors.mainWhite),
             ),
           ),
