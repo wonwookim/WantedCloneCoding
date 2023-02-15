@@ -8,7 +8,8 @@ enum EventType {
   vod('VOD', AppColors.vodColor),
   event('이벤트', AppColors.eventColor),
   promotion('프로모션', AppColors.promotionColor),
-  edu('교육', AppColors.eduColor);
+  edu('교육', AppColors.eduColor),
+  recruit('REQURIT', AppColors.mainWhite);
 
   final String type;
   final Color color;
