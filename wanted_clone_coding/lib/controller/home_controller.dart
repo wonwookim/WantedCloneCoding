@@ -30,7 +30,7 @@ class HomeController extends GetxController {
             'https://loopusimage.s3.ap-northeast-2.amazonaws.com/profile_image/image_cropper_1645676938168.jpg'),
   ];
   @override
-  void onInit()async{
+  void onInit() async {
     pController = PageController(
         viewportFraction: 0.9, initialPage: eventList.length * 100);
     timerstart();
@@ -43,11 +43,13 @@ class HomeController extends GetxController {
     });
     super.onInit();
   }
-  Future getPalettes()async{
-    List<String>images = eventList.map((e) => e.image).toList();
+
+  Future getPalettes() async {
+    List<String> images = eventList.map((e) => e.image).toList();
     await _updatePalettes(images);
     print(colors);
   }
+
   void timerstart() {
     timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       pController.nextPage(
