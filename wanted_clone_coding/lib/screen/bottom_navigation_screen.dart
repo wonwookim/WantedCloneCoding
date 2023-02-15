@@ -30,33 +30,25 @@ class BottomNavigationScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Obx(
-        () => Container(
-          height: 56,
-          child: BottomNavigationBar(
-            backgroundColor: AppColors.naviColor,
-            elevation: 0,
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              type: BottomNavigationBarType.fixed,
-              currentIndex: controller.currentIndex.value,
-              onTap: controller.changeBottomNav,
-              items: [
-                BottomNavigationBarItem(
-                    icon: Text('홈'),
-                    label: '홈'),
-                BottomNavigationBarItem(
-                    icon: Text('채용'),
-                    label: '채용'),
-                BottomNavigationBarItem(
-                    icon: Text('커뮤니티'),
-                    label: '커뮤니티'),
-                BottomNavigationBarItem(
-                    icon: Text('내 정보'),
-                    label: '내 정보'),
-                BottomNavigationBarItem(
-                    icon: Text('MY 원티드'),
-                    label: 'MY 원티드')
-              ]),
+        () => SafeArea(
+          child: Container(
+            height: 50,
+            child: BottomNavigationBar(
+                backgroundColor: AppColors.popupGray,
+                elevation: 0,
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                type: BottomNavigationBarType.fixed,
+                currentIndex: controller.currentIndex.value,
+                onTap: controller.changeBottomNav,
+                items: [
+                  BottomNavigationBarItem(icon: Text('홈'), label: '홈'),
+                  BottomNavigationBarItem(icon: Text('채용'), label: '채용'),
+                  BottomNavigationBarItem(icon: Text('커뮤니티'), label: '커뮤니티'),
+                  BottomNavigationBarItem(icon: Text('내정보'), label: '내 정보'),
+                  BottomNavigationBarItem(icon: Text('MY원티드'), label: 'MY 원티드')
+                ]),
+          ),
         ),
       ),
     );
