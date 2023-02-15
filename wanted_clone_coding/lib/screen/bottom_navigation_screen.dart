@@ -34,7 +34,7 @@ class BottomNavigationScreen extends StatelessWidget {
           child: Container(
             height: 50,
             child: BottomNavigationBar(
-                backgroundColor: AppColors.popupGray,
+                backgroundColor: AppColors.naviColor,
                 elevation: 0,
                 showSelectedLabels: false,
                 showUnselectedLabels: false,
