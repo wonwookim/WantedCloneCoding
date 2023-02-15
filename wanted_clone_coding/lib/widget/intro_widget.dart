@@ -13,7 +13,7 @@ class IntroWidget extends StatelessWidget {
       child: Row(children: [
         RichText(text: TextSpan(children: textSpan)),
         const Spacer(),
-        Text(moreView, style: MyTextTheme.mainbold(context).copyWith(color: AppColors.textGray),)
+        Text(moreView, style: MyTextTheme.mainbold(context).copyWith(color: AppColors.moreGray),)
       ]),
     );
   }

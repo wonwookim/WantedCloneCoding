@@ -5,6 +5,7 @@ class AppColors {
   static const Color mainblack = Color(0xFF2F2F2F);
   static const Color mainWhite = Color(0xFFFFFFFF);
   static const Color maingray = Color(0xFFC1C1C1);
+  static const Color moreGray = Color(0xFF939393);
   static const Color naviColor = Color(0xFFF7F7F7); //네비게이션 색
   static const Color dividegray = Color(0xFFF8F8F8); // divide색
   static const Color cardGray = Color(0xFFE1E2E3); //태그 색
