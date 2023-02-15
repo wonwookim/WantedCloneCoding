@@ -70,6 +70,8 @@ flutter:
     - assets/icons/
     - assets/images/career_pay_test.png
     - assets/images/my_profile_call.png
+    - assets/icons/test/
+
 
  
   fonts:
