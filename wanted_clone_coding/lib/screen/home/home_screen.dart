@@ -12,6 +12,7 @@ import 'package:wanted_clone_coding/utils/font.dart';
 import 'package:wanted_clone_coding/widget/appbar_widget.dart';
 import 'package:wanted_clone_coding/widget/auto_change_widget.dart';
 import 'package:wanted_clone_coding/widget/dialog_widget.dart';
+import 'package:wanted_clone_coding/widget/divided_widget.dart';
 import 'package:wanted_clone_coding/widget/info_image_widget.dart';
 import 'package:wanted_clone_coding/widget/intro_widget.dart';
 import 'package:wanted_clone_coding/widget/remove_scroll_effect_widget.dart';
@@ -73,10 +74,7 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    Container(
-                      decoration: BoxDecoration(color: AppColors.dividegray),
-                      height: 8,
-                    ),
+                    DividedWidget(height: 8),
                     const SizedBox(
                       height: 40,
                     ),
@@ -88,10 +86,7 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    Container(
-                      decoration: BoxDecoration(color: AppColors.dividegray),
-                      height: 8,
-                    ),
+                    DividedWidget(height: 8,)
                   ])
               ],
             ),
@@ -111,9 +106,9 @@ class HomeScreen extends StatelessWidget {
                   : AppColors.mainblue),
           height: 300,
           child: Column(
-            children: const [
-              AppbarWidget(),
-              Divider(
+            children:  [
+              AppbarWidget(screen: Screen.home, screenState: controller.screenState,),
+              const Divider(
                 height: 1,
                 color: AppColors.maingray,
               )
