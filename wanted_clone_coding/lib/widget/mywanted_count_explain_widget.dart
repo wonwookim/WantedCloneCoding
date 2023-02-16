@@ -17,10 +17,11 @@ class CountExplain extends StatelessWidget {
         children: [
           Text(
             count,
-            style: MyTextTheme.mainheight(context),
+            style: MyTextTheme.mainheight(context)
+                .copyWith(fontWeight: FontWeight.w500, fontSize: 16),
           ),
           const SizedBox(height: 8),
-          Text(explain, style: MyTextTheme.main(context))
+          Text(explain, style: MyTextTheme.main(context).copyWith(fontSize: 12))
         ],
       ),
     );

@@ -11,7 +11,6 @@ import 'package:wanted_clone_coding/utils/constant.dart';
 
 import '../model/event_model.dart';
 
-
 class HomeController extends GetxController {
   late PageController pController;
   ScrollController sController = ScrollController();

@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:wanted_clone_coding/controller/my_wanted_controller.dart';
 import 'package:wanted_clone_coding/utils/color.dart';
 import 'package:wanted_clone_coding/utils/font.dart';
 import 'package:wanted_clone_coding/widget/button_widget.dart';
@@ -34,20 +32,41 @@ class MyWantedScreen extends StatelessWidget {
               profileInfo(context),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                 child: ButtonWidget(
                   onTap: () {},
                   btnColor: AppColors.dividegray,
-                  btnText: '요즘 내 관심사는? 선택하고 맞춤 콘텐츠 받기!',
+                  btnText:
+                      '요즘 내 관심사는? 선택하고 맞춤 콘텐츠 받기!                                                         >',
                   fontSize: 10,
                   height: 30,
                   width: Get.width,
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _userinterest(context,
+                      svg: 'assets/icons/heart.svg', explain: '좋아요 0'),
+                  _userinterest(context,
+                      svg: 'assets/icons/bookmark.svg', explain: '북마크 0'),
+                  _userinterest(context,
+                      svg: 'assets/icons/interestcompany.svg',
+                      explain: '관심회사 0'),
+                ],
+              ),
               DividedWidget(
                 height: 1,
               ),
               _profile(context),
+              DividedWidget(
+                height: 1,
+              ),
+              Image.asset(
+                'assets/images/career_pay_test.png',
+                height: 80,
+                width: Get.width,
+              ),
               _suggestSituation(context),
               _supportSituation(context),
               ButtonListWidget(
@@ -142,7 +161,7 @@ Widget profileInfo(BuildContext context) {
   );
 }
 
-Widget _profile(BuildContext context) {
+Widget _profile(context) {
   return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -182,7 +201,7 @@ Widget _profile(BuildContext context) {
   ]);
 }
 
-Widget _suggestSituation(BuildContext context) {
+Widget _suggestSituation(context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
@@ -195,34 +214,33 @@ Widget _suggestSituation(BuildContext context) {
             style: MyTextTheme.mainbold(context).copyWith(fontSize: 15)),
       ),
       Padding(
-        padding: const EdgeInsets.all(13),
+        padding: const EdgeInsets.all(12),
         child: Container(
-          decoration: BoxDecoration(color: AppColors.maingray),
+          height: 90,
+          decoration: BoxDecoration(color: AppColors.dividegray),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: CountExplain(
-                  count: '0',
-                  explain: '관심있음',
-                ),
+              padding: const EdgeInsets.symmetric(vertical: 23),
+              child: CountExplain(
+                count: '0',
+                explain: '관심있음',
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(vertical: 23),
               child: CountExplain(
                 count: '0',
                 explain: '열람',
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(vertical: 23),
               child: CountExplain(
                 count: '0',
                 explain: '받은 제안',
               ),
-            )
+            ),
           ]),
         ),
       ),
@@ -233,7 +251,7 @@ Widget _suggestSituation(BuildContext context) {
   );
 }
 
-Widget _supportSituation(BuildContext context) {
+Widget _supportSituation(context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
@@ -262,40 +280,52 @@ Widget _supportSituation(BuildContext context) {
       //         const Divider(),
       //     itemCount: 4),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: CountExplain(
-              count: '0',
-              explain: '지원 완료',
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        Center(
           child: CountExplain(
             count: '0',
-            explain: '서류 통과',
+            explain: '지원 완료',
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CountExplain(
-            count: '0',
-            explain: '최종 합격',
-          ),
+        CountExplain(
+          count: '0',
+          explain: '서류 통과',
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CountExplain(
-            count: '0',
-            explain: '불합격',
-          ),
+        CountExplain(
+          count: '0',
+          explain: '최종 합격',
+        ),
+        CountExplain(
+          count: '0',
+          explain: '불합격',
         )
       ]),
       const SizedBox(
-        height: 25,
+        height: 40,
       )
     ],
+  );
+}
+
+Widget _userinterest(context, {required String svg, required String explain}) {
+  return GestureDetector(
+    child: Column(
+      children: [
+        SvgPicture.asset(
+          svg,
+          height: 18,
+          width: 18,
+        ),
+        const SizedBox(
+          height: 7,
+        ),
+        Text(
+          explain,
+          style: MyTextTheme.main(context).copyWith(fontSize: 12),
+        ),
+        const SizedBox(
+          height: 30,
+        )
+      ],
+    ),
   );
 }
