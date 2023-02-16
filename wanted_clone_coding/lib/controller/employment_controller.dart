@@ -18,7 +18,7 @@ class EmploymentController extends GetxController {
 
   //--------eventList---------------------
   RxList<Event> recruitList = <Event>[].obs;
-
+  RxList<Event> suggestList = <Event>[].obs;
   @override
   void onInit() async {
     await getEventList();
@@ -73,6 +73,8 @@ class EmploymentController extends GetxController {
 //------------------------------------Get event --------------------------------------------------------------------------------
   Future<void> getEventList() async {
     recruitList.value = recruit_json.map((e) => Event.fromJson(e)).toList();
+    suggestList.value =
+        suggest_position_json.map((e) => Event.fromJson(e)).toList();
   }
 
   //-------------------------dummy data-----------------------------
@@ -84,8 +86,7 @@ class EmploymentController extends GetxController {
       'start_date': null,
       'end_date': null,
       'tag': null,
-      'image':
-          'https://cdn.imweb.me/thumbnail/20220604/63df980e50c50.png',
+      'image': 'https://cdn.imweb.me/thumbnail/20220604/63df980e50c50.png',
     },
     {
       'type': 'event',
@@ -94,7 +95,8 @@ class EmploymentController extends GetxController {
       'start_date': null,
       'end_date': null,
       'tag': null,
-      'image': 'https://contents.nextunicorn.kr/company/179b45c219945a65/rep-76e017d744e6279i5fc77199f3f55994cffa.png?s=640x&t=cover&f=jpg'
+      'image':
+          'https://contents.nextunicorn.kr/company/179b45c219945a65/rep-76e017d744e6279i5fc77199f3f55994cffa.png?s=640x&t=cover&f=jpg'
     },
     {
       'type': 'recruit',
@@ -103,7 +105,79 @@ class EmploymentController extends GetxController {
       'start_date': null,
       'end_date': null,
       'tag': null,
-      'image': 'https://cdn.imweb.me/upload/S202201267a1bf4b51a6a5/8b289e6b017e4.png'
+      'image':
+          'https://cdn.imweb.me/upload/S202201267a1bf4b51a6a5/8b289e6b017e4.png'
+    },
+  ];
+
+  List<Map<String, dynamic>> suggest_position_json = [
+    {
+      'title': '안드로이드 개발자',
+      'subtitle': '피닉스다트',
+      'start_date': null,
+      'end_date': null,
+      'tag': null,
+      'location': '서울 · 한국',
+      'reward': 1000000,
+      'image':
+          'https://www.itworld.co.kr/files/itworld/2020/02/How%20to%20run%20Android%20apps%20in%20Windows-1.jpg',
+    },
+    {
+      'title': '앱 개발',
+      'subtitle': '한국투자증권',
+      'location': '서울 · 한국',
+      'reward': 1000000,
+      'start_date': null,
+      'end_date': null,
+      'tag': null,
+      'image':
+          'http://www.newsroad.co.kr/news/photo/202208/18229_19424_2032.png'
+    },
+    {
+      'title': '안드로이드 개발자',
+      'subtitle': '지란지교시큐리티',
+      'location': '대전 · 한국',
+      'reward': 1000000,
+      'start_date': null,
+      'end_date': null,
+      'tag': null,
+      'image':
+          'https://www.jiransecurity.com/data/images/24ac8f02-3d83-4f92-8119-3c743d9be3ed.png'
+    },
+  ];
+  List<Map<String, dynamic>> popular_position_json = [
+    {
+      'title': 'CS / CX 매니저',
+      'subtitle': '버드코리아',
+      'start_date': null,
+      'end_date': null,
+      'tag': null,
+      'location': '서울 · 한국',
+      'reward': 1000000,
+      'image':
+          'https://static.wanted.co.kr/images/company/23597/xkkgdj0zuhuv1auw__1080_790.jpg',
+    },
+    {
+      'title': '백엔드_Django 개발 주니어 (1년 이상)',
+      'subtitle': '인플루디오',
+      'location': '서울 · 한국',
+      'reward': 1000000,
+      'start_date': null,
+      'end_date': null,
+      'tag': null,
+      'image':
+          'https://compphoto.incruit.com/2023/01/%EC%9B%90%ED%8B%B0%EB%93%9C%2020.jpg'
+    },
+    {
+      'title': 'Backend Developer',
+      'subtitle': '포스트랩',
+      'location': '서울 · 한국',
+      'reward': 1000000,
+      'start_date': null,
+      'end_date': null,
+      'tag': null,
+      'image':
+          'https://static.wanted.co.kr/images/company/35924/gfgua8so8rbskvba__1080_790.jpg'
     },
   ];
 }
