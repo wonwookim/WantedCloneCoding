@@ -460,12 +460,12 @@ class HomeScreen extends StatelessWidget {
   Widget eventForCareerDevelopArea(context) {
     return Column(
       children: [
-        IntroWidget(textSpan: [
+        IntroWidget(title: RichText(text: TextSpan(children: [
           TextSpan(
               text: '커리어 성장을 위한\n맞춤 이벤트',
               style: MyTextTheme.size_18(context)
                   .copyWith(color: AppColors.mainblack, height: 1.5))
-        ], moreView: '더보기'),
+        ]),), moreView: '더보기'),
         const SizedBox(height: 16),
         SizedBox(
           height: 265,
