@@ -63,7 +63,7 @@ class MyWantedScreen extends StatelessWidget {
                 height: 1,
               ),
               Image.asset(
-                'assets/images /career_pay_test.png',
+                'assets/images/career_pay_test.png',
                 height: 80,
                 width: Get.width,
               ),
