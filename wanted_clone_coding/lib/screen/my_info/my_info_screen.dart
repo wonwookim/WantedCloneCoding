@@ -98,7 +98,7 @@ Widget _profile(context) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Image.asset(
-        'assets/images /my_profile_call.png',
+        'assets/images/my_profile_call.png',
         height: 150,
         width: Get.width,
       ),
@@ -145,7 +145,7 @@ Widget _resume(context) {
   return Column(
     children: [
       Image.asset(
-        'assets/images /my_profile_call.png',
+        'assets/images/my_profile_call.png',
         height: 150,
         width: Get.width,
       ),

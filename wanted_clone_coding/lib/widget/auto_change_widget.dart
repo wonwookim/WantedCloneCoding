@@ -10,12 +10,10 @@ class AutoChangeWidget extends StatelessWidget {
   //홈, 채용 탭에서 사용
   AutoChangeWidget(
       {Key? key,
-      required this.categoryText,
       required this.controller,
       required this.eventList,
       required this.currentIndex})
       : super(key: key);
-  String categoryText;
   PageController controller;
   List<Event> eventList;
   RxInt currentIndex;
@@ -26,7 +24,10 @@ class AutoChangeWidget extends StatelessWidget {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          category(context,categoryText: categoryText),
+          category(context,
+              categoryText: eventList[currentIndex.value].type!.type == '이벤트'
+                  ? 'EVENT'
+                  : eventList[currentIndex.value].type!.type),
           const SizedBox(height: 8),
           Padding(
             padding: EdgeInsets.only(left: 16.0),
