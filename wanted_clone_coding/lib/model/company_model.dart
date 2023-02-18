@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class company{
-  company({
+class Company{
+  Company({
     required this.name,
     required this.slogan,
     required this.image,
