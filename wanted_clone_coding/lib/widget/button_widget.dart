@@ -12,6 +12,7 @@ class ButtonWidget extends StatelessWidget {
       required this.btnText,
       this.textColor,
       this.fontSize,
+      this.fontWeight,
       required this.height,
       required this.width,
       // this.isBorder,
@@ -27,7 +28,7 @@ class ButtonWidget extends StatelessWidget {
   // bool? isBorder;
   double? width;
   double? height;
-
+  FontWeight? fontWeight;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -38,6 +39,7 @@ class ButtonWidget extends StatelessWidget {
               child: Text(btnText,
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    fontWeight: fontWeight,
                     fontSize: fontSize,
                     color: textColor,
                   )),

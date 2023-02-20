@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wanted_clone_coding/controller/employment_controller.dart';
+import 'package:wanted_clone_coding/model/company_model.dart';
 import 'package:wanted_clone_coding/model/event_model.dart';
 import 'package:wanted_clone_coding/utils/color.dart';
 import 'package:wanted_clone_coding/utils/constant.dart';
 import 'package:wanted_clone_coding/utils/font.dart';
 import 'package:wanted_clone_coding/widget/appbar_widget.dart';
 import 'package:wanted_clone_coding/widget/auto_change_widget.dart';
+import 'package:wanted_clone_coding/widget/button_widget.dart';
+import 'package:wanted_clone_coding/widget/divided_widget.dart';
 import 'package:wanted_clone_coding/widget/info_image_widget.dart';
 import 'package:wanted_clone_coding/widget/intro_widget.dart';
 import 'package:wanted_clone_coding/widget/remove_scroll_effect_widget.dart';
@@ -42,7 +45,15 @@ class EmploymentScreen extends StatelessWidget {
                   Column(children: [
                     gotoRecruitPosition(context),
                     const SizedBox(height: 40),
-                    suggestAIPosition(context)
+                    suggestAIPosition(context),
+                    const SizedBox(height: 40),
+                    receiveCompany(context),
+                    const SizedBox(height: 40),
+                    under_50_Company(context),
+                    const SizedBox(height: 40),
+                    DividedWidget(height: 8,),
+                    const SizedBox(height: 40),
+                    currentEmploymentWithTheme(context),
                   ])
               ],
             ),
@@ -174,12 +185,13 @@ class EmploymentScreen extends StatelessWidget {
         SizedBox(
           height: 220,
           child: ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            scrollDirection: Axis.horizontal,
-            primary: false,
-            shrinkWrap: true,
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              scrollDirection: Axis.horizontal,
+              primary: false,
+              shrinkWrap: true,
               itemBuilder: (context, index) {
-                return eventWidget(context, event: controller.suggestList[index]);
+                return eventWidget(context,
+                    event: controller.suggestList[index]);
               },
               separatorBuilder: (context, index) {
                 return const SizedBox(width: 8);
@@ -190,13 +202,142 @@ class EmploymentScreen extends StatelessWidget {
     );
   }
 
+  Widget receiveCompany(context) {
+    return Column(
+      children: [
+        IntroWidget(
+            title: RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "#식사·간식 제공 \u{2615}\n",
+                  style: MyTextTheme.mainbold(context).copyWith(
+                      fontSize: 17, height: 1.5, color: AppColors.mainblack)),
+              TextSpan(
+                  text: '회사들을 모아봤어요',
+                  style: MyTextTheme.main(context)
+                      .copyWith(fontSize: 16, color: Color(0xFF434343)))
+            ])),
+            moreView: '포지션으로 더보기'),
+        const SizedBox(height: 20),
+        SizedBox(
+          height: 250,
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            primary: false,
+              itemBuilder: (context, index) {
+                return companyWidget(context,
+                    company: controller.foodReceiveCompanyList[index]);
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(width: 8);
+              },
+              itemCount: controller.foodReceiveCompanyList.length),
+        )
+      ],
+    );
+  }
+
+  Widget under_50_Company(context) {
+    return Column(
+      children: [
+        IntroWidget(
+            title: RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "#50인 이하 \u{2B07}\n",
+                  style: MyTextTheme.mainbold(context).copyWith(
+                      fontSize: 17, height: 1.5, color: AppColors.mainblack)),
+              TextSpan(
+                  text: '회사들을 모아봤어요',
+                  style: MyTextTheme.main(context)
+                      .copyWith(fontSize: 16, color: Color(0xFF434343)))
+            ])),
+            moreView: '포지션으로 더보기'),
+        const SizedBox(height: 20),
+        SizedBox(
+          height: 250,
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            primary: false,
+              itemBuilder: (context, index) {
+                return companyWidget(context,
+                    company: controller.under50CompanyList[index]);
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(width: 8);
+              },
+              itemCount: controller.under50CompanyList.length),
+        )
+      ],
+    );
+  }
+  Widget currentEmploymentWithTheme(context){
+    return Column(children: [
+      IntroWidget(title: Text('테마로 모아보는 요즘 채용', style:  MyTextTheme.mainbold(context).copyWith(
+                      fontSize: 17, height: 1.5, color: AppColors.mainblack)), moreView: ''),
+      const SizedBox(height: 7),
+
+    ],);
+  }
+
+  Widget companyWidget(context, {required Company company}) {
+    return SizedBox(
+      width: 300,
+      child: Column(
+        children: [
+          InfoImageWidget(height: 170, width: 300, imgUrl: company.introImage),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              InfoImageWidget(height: 35, width: 35, imgUrl: company.image),
+              const SizedBox(width: 7),
+              RichText(
+                  maxLines: 3,
+                  text: TextSpan(children: [
+                    TextSpan(
+                        text: '${company.name}\n',
+                        style: MyTextTheme.mainbold(context).copyWith(
+                            fontSize: 16,
+                            height: 1.5,
+                            color: AppColors.mainblack)),
+                    TextSpan(
+                        text: company.field,
+                        style: MyTextTheme.size_12_bold(context)
+                            .copyWith(color: AppColors.textGray))
+                  ])),
+              const Spacer(),
+              ButtonWidget(
+                onTap: () {},
+                btnColor: AppColors.mainWhite,
+                btnText: '팔로우 ',
+                height: 35,
+                width: 80,
+                textColor: AppColors.mainblue,
+                borderColor: AppColors.cardGray,
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   Widget eventWidget(context, {required Event event}) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       InfoImageWidget(height: 120, width: 160, imgUrl: event.image),
       const SizedBox(height: 10),
-      Text(event.title,
-          style: MyTextTheme.mainbold(context)
-              .copyWith(color: AppColors.mainblack), maxLines: 2,),
+      Text(
+        event.title,
+        style:
+            MyTextTheme.mainbold(context).copyWith(color: AppColors.mainblack),
+        maxLines: 2,
+      ),
       const SizedBox(height: 8),
       Text(
         event.subtitle,
@@ -213,5 +354,13 @@ class EmploymentScreen extends StatelessWidget {
         style: MyTextTheme.size_12(context).copyWith(color: Color(0xFF404040)),
       )
     ]);
+  }
+
+  Widget currentEmploymentWithThemeWidget(){
+    return Column(
+      children: [
+        InfoImageWidget(height: 185, width: 320, imgUrl: ''),
+      ],
+    );
   }
 }
