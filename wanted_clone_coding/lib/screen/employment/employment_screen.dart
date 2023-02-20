@@ -10,6 +10,7 @@ import 'package:wanted_clone_coding/utils/font.dart';
 import 'package:wanted_clone_coding/widget/appbar_widget.dart';
 import 'package:wanted_clone_coding/widget/auto_change_widget.dart';
 import 'package:wanted_clone_coding/widget/button_widget.dart';
+import 'package:wanted_clone_coding/widget/divided_widget.dart';
 import 'package:wanted_clone_coding/widget/info_image_widget.dart';
 import 'package:wanted_clone_coding/widget/intro_widget.dart';
 import 'package:wanted_clone_coding/widget/remove_scroll_effect_widget.dart';
@@ -48,7 +49,11 @@ class EmploymentScreen extends StatelessWidget {
                     const SizedBox(height: 40),
                     receiveCompany(context),
                     const SizedBox(height: 40),
-                    under_50_Company(context)
+                    under_50_Company(context),
+                    const SizedBox(height: 40),
+                    DividedWidget(height: 8,),
+                    const SizedBox(height: 40),
+                    currentEmploymentWithTheme(context),
                   ])
               ],
             ),
@@ -270,6 +275,14 @@ class EmploymentScreen extends StatelessWidget {
       ],
     );
   }
+  Widget currentEmploymentWithTheme(context){
+    return Column(children: [
+      IntroWidget(title: Text('테마로 모아보는 요즘 채용', style:  MyTextTheme.mainbold(context).copyWith(
+                      fontSize: 17, height: 1.5, color: AppColors.mainblack)), moreView: ''),
+      const SizedBox(height: 7),
+
+    ],);
+  }
 
   Widget companyWidget(context, {required Company company}) {
     return SizedBox(
@@ -341,5 +354,13 @@ class EmploymentScreen extends StatelessWidget {
         style: MyTextTheme.size_12(context).copyWith(color: Color(0xFF404040)),
       )
     ]);
+  }
+
+  Widget currentEmploymentWithThemeWidget(){
+    return Column(
+      children: [
+        InfoImageWidget(height: 185, width: 320, imgUrl: ''),
+      ],
+    );
   }
 }
