@@ -10,7 +10,7 @@ class IntroWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(children: [
+      child: Row(crossAxisAlignment: CrossAxisAlignment.end,children: [
         title,
         const Spacer(),
         Text(moreView, style: MyTextTheme.mainbold(context).copyWith(color: AppColors.moreGray),)
