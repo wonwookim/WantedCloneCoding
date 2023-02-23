@@ -115,7 +115,7 @@ class HomeController extends GetxController {
     activeTag.value = tagList.first.tagId;
   }
 
-  Future<void> getCareerInsight(int activeTag) async {
+  Future getCareerInsight(int activeTag) async {
     if (!careerInsightField.containsKey(activeTag)) {
       careerInsightField[activeTag] = career_insight_json[activeTag]!
           .map((careerInsight) => CareerInsight.fromJson(careerInsight))
@@ -238,16 +238,7 @@ class HomeController extends GetxController {
     }
   ];
 
-  List<Map<String, dynamic>> tag_json = [
-    {'tag_id': 0, 'tag': 'IT/기술'},
-    {'tag_id': 1, 'tag': '개발'},
-    {'tag_id': 2, 'tag': '커리어고민'},
-    {'tag_id': 3, 'tag': '취업/이직'},
-    {'tag_id': 4, 'tag': '데이터'},
-    {'tag_id': 5, 'tag': '회사생활'},
-    {'tag_id': 6, 'tag': 'HR'},
-    {'tag_id': 7, 'tag': '마케팅'}
-  ];
+  
 
   Map<int, List<Map<String, dynamic>>> career_insight_json = {
     0: [

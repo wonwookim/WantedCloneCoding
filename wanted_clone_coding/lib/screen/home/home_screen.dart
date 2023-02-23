@@ -17,6 +17,7 @@ import 'package:wanted_clone_coding/widget/info_image_widget.dart';
 import 'package:wanted_clone_coding/widget/intro_widget.dart';
 import 'package:wanted_clone_coding/widget/remove_scroll_effect_widget.dart';
 import 'package:wanted_clone_coding/widget/tag_widget.dart';
+import 'package:wanted_clone_coding/widget/tap_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -31,7 +32,14 @@ class HomeScreen extends StatelessWidget {
             ? AppBar(
                 toolbarHeight:
                     controller.appBarTagIsTap.value ? 110 : kToolbarHeight,
-                title: tapWidget(context, controller.appBarTagIsTap),
+                title: TapWidget(
+            isTap: controller.appBarTagIsTap,
+            tagList: controller.tagList,
+            activeTag: controller.activeTag,
+            changePage: controller.getCareerInsight(controller.tagList
+                .where((p0) => p0.isTap.value == 1)
+                .first
+                .tagId)),
                 titleSpacing: 0,
                 elevation: 0,
                 automaticallyImplyLeading: false,
@@ -85,7 +93,9 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    DividedWidget(height: 8,)
+                    DividedWidget(
+                      height: 8,
+                    )
                   ])
               ],
             ),
@@ -105,8 +115,11 @@ class HomeScreen extends StatelessWidget {
                   : AppColors.mainblue),
           height: 300,
           child: Column(
-            children:  [
-              AppbarWidget(screen: Screen.home, screenState: controller.screenState,),
+            children: [
+              AppbarWidget(
+                screen: Screen.home,
+                screenState: controller.screenState,
+              ),
               const Divider(
                 height: 1,
                 color: AppColors.maingray,
@@ -147,7 +160,14 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16, key: controller.gKey),
-        tapWidget(context, controller.isTap),
+        TapWidget(
+            isTap: controller.isTap,
+            tagList: controller.tagList,
+            activeTag: controller.activeTag,
+            changePage: controller.getCareerInsight(controller.tagList
+                .where((p0) => p0.isTap.value == 1)
+                .first
+                .tagId)),
         const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -232,110 +252,110 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget tapWidget(context, RxBool isTap) {
-    return Obx(
-      () => Stack(
-        children: [
-          isTap.value
-              ? Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 60),
-                  child: Wrap(
-                      clipBehavior: Clip.hardEdge,
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: controller.tagList
-                          .map((element) => TagWidget(
-                                ontap: () async {
-                                  element.isTap.value = 1;
-                                  controller.tagList
-                                      .where((tag) =>
-                                          tag.tagId ==
-                                          controller.activeTag.value)
-                                      .first
-                                      .isTap
-                                      .value = 0;
-                                  await controller
-                                      .getCareerInsight(element.tagId);
-                                  controller.activeTag.value = element.tagId;
-                                },
-                                tag: element,
-                                height: 35,
-                              ))
-                          .toList()),
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(right: 40.0),
-                  child: SizedBox(
-                    height: 35,
-                    child: ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return TagWidget(
-                          tag: controller.tagList[index],
-                          ontap: () async {
-                            controller.tagList
-                                .where((p0) =>
-                                    p0.tagId == controller.activeTag.value)
-                                .first
-                                .isTap
-                                .value = 0;
-                            controller.tagList[index].isTap.value = 1;
-                            await controller.getCareerInsight(
-                                controller.tagList[index].tagId);
-                            controller.activeTag.value =
-                                controller.tagList[index].tagId;
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          width: 8,
-                        );
-                      },
-                      padding: const EdgeInsets.only(left: 16, right: 20),
-                      itemCount: controller.tagList.length,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      primary: false,
-                    ),
-                  ),
-                ),
-          Positioned(
-            right: 16,
-            child: GestureDetector(
-              onTap: () {
-                isTap.value = !isTap.value;
-              },
-              child: Container(
-                width: 35,
-                height: 35,
-                decoration: BoxDecoration(
-                    color: AppColors.mainWhite,
-                    border: Border.all(color: AppColors.cardGray),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: isTap.value
-                        ? null
-                        : [
-                            BoxShadow(
-                                color: AppColors.mainWhite.withOpacity(0.7),
-                                spreadRadius: 10,
-                                blurRadius: 5.0,
-                                offset: Offset(-3, 0))
-                          ]),
-                child: Center(
-                  child: Text(
-                    !isTap.value ? "∨" : "∧",
-                    style: MyTextTheme.size_12_bold(context)
-                        .copyWith(color: AppColors.textGray),
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+  // Widget tapWidget(context, RxBool isTap) {
+  //   return Obx(
+  //     () => Stack(
+  //       children: [
+  //         isTap.value
+  //             ? Padding(
+  //                 padding: const EdgeInsets.only(left: 16, right: 60),
+  //                 child: Wrap(
+  //                     clipBehavior: Clip.hardEdge,
+  //                     spacing: 8,
+  //                     runSpacing: 8,
+  //                     children: controller.tagList
+  //                         .map((element) => TagWidget(
+  //                               ontap: () async {
+  //                                 element.isTap.value = 1;
+  //                                 controller.tagList
+  //                                     .where((tag) =>
+  //                                         tag.tagId ==
+  //                                         controller.activeTag.value)
+  //                                     .first
+  //                                     .isTap
+  //                                     .value = 0;
+  //                                 await controller
+  //                                     .getCareerInsight(element.tagId);
+  //                                 controller.activeTag.value = element.tagId;
+  //                               },
+  //                               tag: element,
+  //                               height: 35,
+  //                             ))
+  //                         .toList()),
+  //               )
+  //             : Padding(
+  //                 padding: const EdgeInsets.only(right: 40.0),
+  //                 child: SizedBox(
+  //                   height: 35,
+  //                   child: ListView.separated(
+  //                     physics: const BouncingScrollPhysics(),
+  //                     itemBuilder: (context, index) {
+  //                       return TagWidget(
+  //                         tag: controller.tagList[index],
+  //                         ontap: () async {
+  //                           controller.tagList
+  //                               .where((p0) =>
+  //                                   p0.tagId == controller.activeTag.value)
+  //                               .first
+  //                               .isTap
+  //                               .value = 0;
+  //                           controller.tagList[index].isTap.value = 1;
+  //                           await controller.getCareerInsight(
+  //                               controller.tagList[index].tagId);
+  //                           controller.activeTag.value =
+  //                               controller.tagList[index].tagId;
+  //                         },
+  //                       );
+  //                     },
+  //                     separatorBuilder: (context, index) {
+  //                       return const SizedBox(
+  //                         width: 8,
+  //                       );
+  //                     },
+  //                     padding: const EdgeInsets.only(left: 16, right: 20),
+  //                     itemCount: controller.tagList.length,
+  //                     scrollDirection: Axis.horizontal,
+  //                     shrinkWrap: true,
+  //                     primary: false,
+  //                   ),
+  //                 ),
+  //               ),
+  //         Positioned(
+  //           right: 16,
+  //           child: GestureDetector(
+  //             onTap: () {
+  //               isTap.value = !isTap.value;
+  //             },
+  //             child: Container(
+  //               width: 35,
+  //               height: 35,
+  //               decoration: BoxDecoration(
+  //                   color: AppColors.mainWhite,
+  //                   border: Border.all(color: AppColors.cardGray),
+  //                   borderRadius: BorderRadius.circular(16),
+  //                   boxShadow: isTap.value
+  //                       ? null
+  //                       : [
+  //                           BoxShadow(
+  //                               color: AppColors.mainWhite.withOpacity(0.7),
+  //                               spreadRadius: 10,
+  //                               blurRadius: 5.0,
+  //                               offset: Offset(-3, 0))
+  //                         ]),
+  //               child: Center(
+  //                 child: Text(
+  //                   !isTap.value ? "∨" : "∧",
+  //                   style: MyTextTheme.size_12_bold(context)
+  //                       .copyWith(color: AppColors.textGray),
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget goTypeTest(context) {
     return Padding(
@@ -460,12 +480,16 @@ class HomeScreen extends StatelessWidget {
   Widget eventForCareerDevelopArea(context) {
     return Column(
       children: [
-        IntroWidget(title: RichText(text: TextSpan(children: [
-          TextSpan(
-              text: '커리어 성장을 위한\n맞춤 이벤트',
-              style: MyTextTheme.size_18(context)
-                  .copyWith(color: AppColors.mainblack, height: 1.5))
-        ]),), moreView: '더보기'),
+        IntroWidget(
+            title: RichText(
+              text: TextSpan(children: [
+                TextSpan(
+                    text: '커리어 성장을 위한\n맞춤 이벤트',
+                    style: MyTextTheme.size_18(context)
+                        .copyWith(color: AppColors.mainblack, height: 1.5))
+              ]),
+            ),
+            moreView: '더보기'),
         const SizedBox(height: 16),
         SizedBox(
           height: 265,
