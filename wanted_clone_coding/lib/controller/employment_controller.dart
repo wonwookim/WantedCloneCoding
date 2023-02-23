@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:wanted_clone_coding/model/company_model.dart';
+import 'package:wanted_clone_coding/model/employ_theme_model.dart';
 import 'package:wanted_clone_coding/model/event_model.dart';
 import 'package:wanted_clone_coding/utils/color.dart';
 import 'package:wanted_clone_coding/utils/constant.dart';
@@ -20,14 +21,17 @@ class EmploymentController extends GetxController {
   //--------eventList---------------------
   RxList<Event> recruitList = <Event>[].obs;
   RxList<Event> suggestList = <Event>[].obs;
-
+  RxList<Event> currentUpPositionList = <Event>[].obs;
   RxList<Company> foodReceiveCompanyList = <Company>[].obs;
   RxList<Company> under50CompanyList = <Company>[].obs;
+
+  RxList<EmployTheme> employThemeList = <EmployTheme>[].obs;
   @override
   void onInit() async {
     await getEventList();
     await getPalettes();
     await getCompany();
+    await getEmploymentTheme();
     screenState(ScreenState.success);
     timerstart();
     pController = PageController(
@@ -80,15 +84,21 @@ class EmploymentController extends GetxController {
     recruitList.value = recruit_json.map((e) => Event.fromJson(e)).toList();
     suggestList.value =
         suggest_position_json.map((e) => Event.fromJson(e)).toList();
+    currentUpPositionList.value = current_up_position_json.map((e) => Event.fromJson(e)).toList();
   }
 
   Future<void> getCompany() async {
     Map<String, List<Company>> company_list = <String, List<Company>>{};
     company_json.forEach((key, value) {
-      company_list[key]= value.map((e) => Company.fromJson(e)).toList();
+      company_list[key] = value.map((e) => Company.fromJson(e)).toList();
     });
     foodReceiveCompanyList.value = company_list['food_receive']!;
     under50CompanyList.value = company_list['under_50']!;
+  }
+
+  Future<void> getEmploymentTheme() async {
+    employThemeList.value =
+        employ_theme_json.map((e) => EmployTheme.fromjson(e)).toList();
   }
 
   //-------------------------dummy data-----------------------------
@@ -249,4 +259,173 @@ class EmploymentController extends GetxController {
       }
     ]
   };
+
+  List<Map<String, dynamic>> employ_theme_json = [
+    {
+      'title': '최근 100억 이상 투자 유치 기업 개발 포지션',
+      'subtitle': '최근 100억 이상 투자 유치 기업 - 개발 포지션',
+      'body': '최근 6개월 내 대규모 투자 유치에 성공한 기업들의 개발직무 포지션을 모아봤어요.',
+      'image':
+          'https://1.bp.blogspot.com/-GJWxOqkQFxM/X87jX3qjCuI/AAAAAAAA954/mc7VB8_GpXoAuizMfd92v4GxRvLJQmfVACLcBGAsYHQ/s2048/ilya-pavlov-OqtafYT5kTw-unsplash.jpg',
+      'company_list': [
+        {
+          'name': '비엘에프(CONNECT.ED)',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://pds.saramin.co.kr/company/logo/202007/28/qe4wpz_kmlx-wbfptb_logo.png',
+          'intro_image':
+              'https://static.wanted.co.kr/images/company/13950/yidnem3qmpzrjwes__1080_790.jpg'
+        },
+        {
+          'name': '미트박스글로벌',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://static.wanted.co.kr/images/company/683/h56ounn4t9lidpev__1080_790.jpg',
+          'intro_image':
+              'https://static.wanted.co.kr/images/company/683/ow0zklm8mvwdjn5s__1080_790.jpg'
+        },
+        {
+          'name': '머스트무브',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://image.rocketpunch.com/company/84709/mustmove_logo_1649148081.jpg?s=400x400&t=inside',
+          'intro_image':
+              'https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Fcompany%2F23314%2Fibg8vhvympxxqhhg__1080_790.jpg&w=1000&q=75'
+        },
+        {
+          'name': '피플즈리그',
+          'field': '제조',
+          'image':
+              'https://static.wanted.co.kr/images/company/35999/gdicjyve3hbtfe8q__1080_790.jpg',
+          'intro_image':
+              'https://wowtale.net/wp-content/uploads/2021/12/20211223-JBventures.jpeg'
+        },
+        {
+          'name': '래브라도랩스',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://grepp-programmers.s3.amazonaws.com/production/company/logo/7283/logo-6.png',
+          'intro_image':
+              'https://asset.programmers.co.kr/image/resize/production/company/156539/m_bd00f6c0-8b62-4190-ac33-af751d560d94.jpg'
+        },
+        {
+          'name': '위버',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://image.rocketpunch.com/company/16270/weebur_logo_1656643747.jpg?s=400x400&t=inside',
+          'intro_image':
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr91EFxMZENbAahR_vJLaDjc4aOS-cIrWqI73Jo6nR9iTsbI_G4xOs1FSDUMa-8jKEBFg&usqp=CAU'
+        }
+      ]
+    },
+    {
+      'title': '대기업',
+      'subtitle': '주요 대기업',
+      'body':
+          '사업성, 성장성, 인지도까지! 세 가지를 모두 갖춘 대기업을 소개합니다. 나에게 맞는 채용공고를 찾아 북마크해보세요.',
+      'image': 'https://img.hankyung.com/photo/201707/01.14340760.1.jpg',
+      'company_list': [
+        {
+          'name': '비엘에프(CONNECT.ED)',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://pds.saramin.co.kr/company/logo/202007/28/qe4wpz_kmlx-wbfptb_logo.png',
+          'intro_image':
+              'https://static.wanted.co.kr/images/company/13950/yidnem3qmpzrjwes__1080_790.jpg'
+        },
+        {
+          'name': '미트박스글로벌',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://static.wanted.co.kr/images/company/683/h56ounn4t9lidpev__1080_790.jpg',
+          'intro_image':
+              'https://static.wanted.co.kr/images/company/683/ow0zklm8mvwdjn5s__1080_790.jpg'
+        },
+        {
+          'name': '머스트무브',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://image.rocketpunch.com/company/84709/mustmove_logo_1649148081.jpg?s=400x400&t=inside',
+          'intro_image':
+              'https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Fcompany%2F23314%2Fibg8vhvympxxqhhg__1080_790.jpg&w=1000&q=75'
+        },
+        {
+          'name': '피플즈리그',
+          'field': '제조',
+          'image':
+              'https://static.wanted.co.kr/images/company/35999/gdicjyve3hbtfe8q__1080_790.jpg',
+          'intro_image':
+              'https://wowtale.net/wp-content/uploads/2021/12/20211223-JBventures.jpeg'
+        },
+        {
+          'name': '래브라도랩스',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://grepp-programmers.s3.amazonaws.com/production/company/logo/7283/logo-6.png',
+          'intro_image':
+              'https://asset.programmers.co.kr/image/resize/production/company/156539/m_bd00f6c0-8b62-4190-ac33-af751d560d94.jpg'
+        },
+        {
+          'name': '위버',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://image.rocketpunch.com/company/16270/weebur_logo_1656643747.jpg?s=400x400&t=inside',
+          'intro_image':
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr91EFxMZENbAahR_vJLaDjc4aOS-cIrWqI73Jo6nR9iTsbI_G4xOs1FSDUMa-8jKEBFg&usqp=CAU'
+        }
+      ]
+    },
+    {
+      'title': 'EA코리아 채용',
+      'subtitle': 'EA코리아 채용',
+      'body': "We're in the Game. Join out Game",
+      'image':
+          'https://compphoto.incruit.com/2014/08/%ED%9A%8C%EC%9D%98%EC%8B%A4_2.jpg',
+      'company_list': [
+        {
+          'name': 'Electronic Arts Korea(EA Korea)',
+          'field': 'IT, 컨텐츠',
+          'image':
+              'https://d32gkk464bsqbe.cloudfront.net/company-profiles/o/8cfdf72c99de043a560e95d28cefde45a0a26d56.jpeg?v=6.8.6',
+          'intro_image': ''
+        },
+      ]
+    }
+  ];
+
+  List<Map<String, dynamic>> current_up_position_json = [
+    {
+      'title': 'Backend Developer',
+      'subtitle': '포스트랩',
+      'location': '서울 · 한국',
+      'reward': 1000000,
+      'start_date': null,
+      'end_date': null,
+      'tag': null,
+      'image':
+          'https://static.wanted.co.kr/images/company/35924/gfgua8so8rbskvba__1080_790.jpg'
+    },
+    {
+      'title': 'CS / CX 매니저',
+      'subtitle': '버드코리아',
+      'start_date': null,
+      'end_date': null,
+      'tag': null,
+      'location': '서울 · 한국',
+      'reward': 1000000,
+      'image':
+          'https://static.wanted.co.kr/images/company/23597/xkkgdj0zuhuv1auw__1080_790.jpg',
+    },
+    {
+      'title': '백엔드_Django 개발 주니어 (1년 이상)',
+      'subtitle': '인플루디오',
+      'location': '서울 · 한국',
+      'reward': 1000000,
+      'start_date': null,
+      'end_date': null,
+      'tag': null,
+      'image':
+          'https://compphoto.incruit.com/2023/01/%EC%9B%90%ED%8B%B0%EB%93%9C%2020.jpg'
+    },
+  ];
 }
